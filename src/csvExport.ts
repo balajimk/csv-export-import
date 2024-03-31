@@ -3,7 +3,7 @@ import { IConfigProperty, IExportConfiguration } from "./csvTypes";
 export const exportToCSV = (items: any, configProperties: IConfigProperty[], exportConfig?: IExportConfiguration, dependentData?: any): string => {
     if (!exportConfig)
         exportConfig = {
-            "title": 'Export Data As CSV',
+            "title": null,
             "includeHeader": true,
             "columnSeparator": ',',
             "arraySeparator": '|',
