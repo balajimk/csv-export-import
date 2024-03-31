@@ -3,9 +3,16 @@
 ## Purpose
 csv-export-import can export Typescript/JavaScript data objects into CSV format and import CSV string back to data objects.
 
-Importing data from csv string as data objects doesn't need any configuration at all as long as the headers and headers is mandatory at the moment.
-
-On the other hand, Exporting objects into CSV shall use extensive configuration to manipulate the data extensively and geenrate different outputs based on the requirement. 
+Exporting objects into CSV involves leveraging the extensive configuration possibilities to manipulate data and generate various outputs according to specific requirements. 
+```
+const exportedCSV = exportToCSV(usersData, propertiesConfiguration)
+console.log(exportedCSV);
+```
+Importing data from CSV string into data objects doesn't need any configuration at all; as long as the headers are available. Note that the headers row is mandatory at the moment.
+```
+const importedData = importFromCSV(exportedCSV);
+console.log(importedData);
+```
 
 ## Installation
 ```javascript
