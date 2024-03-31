@@ -437,6 +437,7 @@ const supportingData = {
 };
 console.log(exportToCSV(usersData, propertiesConfiguration, null, supportingData));
 ```
+Notice the isArray properties set to the array property column and the values are piped in the result.
 #### Config Type 6: Output
 ```
 Export Data As CSV
@@ -446,6 +447,101 @@ S.No,Id,First Name,Last Name,Role,Organisation,ScoreCount,Full Name,Organisation
 5003,3,Barbra,Gilmore,2,1003,2,Barbra Gilmore,Pacom,Manager,33|42
 5004,4,Cruz,Ashley,3,1002,3,Cruz Ashley,Google,Staff-Eng,33|45|50
 5005,5,Rosemary,Hart,2,1003,0,Rosemary Hart,Pacom,Manager,
+```
+### Config Type 7: Export with isArray = true & spread: true.
+```typescript
+import { exportToCSV, IConfigProperty, IExportConfiguration } from "csv-export-import";
+
+//  Configuration for Export three columns from the data.
+const propertiesConfiguration: IConfigProperty[] = [
+  {
+    header: 'Id',
+    property: 'id',
+    order: 1
+  },
+  {
+    header: 'First Name',
+    property: 'firstname',
+    order: 2
+  },
+  {
+    header: 'Last Name',
+    property: 'lastname',
+    order: 3
+  },
+  {
+    header: 'Organisation',
+    property: 'orgId',
+    order: 5
+  },
+  {
+    header: 'Role',
+    property: 'roleId',
+    order: 4
+  },
+  {
+    header: 'ScoreCount',
+    property: 'scores',
+    order: 6,
+    generateExportDataFn: (property) => property ? property.length : 0,
+  },
+  {
+    header: 'Full Name',
+    generateExportDataFn: (_, item) => item ? `${item.firstname} ${item.lastname}` : '',
+    order: 7
+  },
+  {
+    header: 'S.No',
+    generateExportDataFn: (x, y, index) => index + 1 + 5000,
+    order: 0
+  },
+  {
+    header: 'Organisation Name',
+    property: 'orgId',
+    generateExportDataFn: (property, item, index, deps) => {
+    	if (!property || !deps) return '';
+      if (!deps.organisations) return '';
+    	const org = deps.organisations.find(o => o.id == property)
+    	return org ? org.name : '';
+    },
+    order: 8
+  },
+  {
+    header: 'Role Name',
+    property: 'roleId',
+    generateExportDataFn: (property, item, index, deps) => {
+    	if (!property || !deps) return '';
+    	if (!deps.organisations) return '';
+    	const role = deps.roles.find(r => r.id == property);
+      return role ? role.name : '';
+    },
+    order: 9
+  },
+  {
+    header: 'All Scores',
+    property: 'scores',
+    isArray: true,
+    spread: true,
+    order: 10
+  },
+];
+
+const supportingData = {
+  organisations: organisations,
+  roles: roles
+};
+console.log(exportToCSV(usersData, propertiesConfiguration, null, supportingData));
+```
+Notice the Array properties spread to multiple columns.
+#### Config Type 7: Output
+```
+Export Data As CSV
+S.No,Id,First Name,Last Name,Role,Organisation,ScoreCount,Full Name,Organisation Name,Role Name,All Scores[0],All Scores[1],All Scores[2],All Scores[3],All Scores[4]
+5001,1,Fuentes,Tran,3,1001,5,Fuentes Tran,Microsoft,Staff-Eng,90,80,70,60,75
+5002,2,Ramona,Vargas,2,1003,2,Ramona Vargas,Pacom,Manager,19,31,,,
+5003,3,Barbra,Gilmore,2,1003,2,Barbra Gilmore,Pacom,Manager,33,42,,,
+5004,4,Cruz,Ashley,3,1002,3,Cruz Ashley,Google,Staff-Eng,33,45,50,,
+5005,5,Rosemary,Hart,2,1003,0,Rosemary Hart,Pacom,Manager,,,,,
 ```
 ## IConfigProperty Properties
 | Property Name           | Description |
