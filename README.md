@@ -1,12 +1,46 @@
 # CSV Export Import | csv-export-import | Basic to Advanced
 
 ## Purpose
-csv-export-import can export Typescript/JavaScriptd data objects into CSV format and import CSV string back to data objects.
+csv-export-import can export Typescript/JavaScript data objects into CSV format and import CSV string back to data objects.
+
+Importing data from csv string as data objects doesn't need any configuration at all as long as the headers and headers is mandatory at the moment.
+
+On the other hand, Exporting objects into CSV shall use extensive configuration to manipulate the data extensively and geenrate different outputs based on the requirement. 
 
 ## Installation
 ```javascript
 npm install --save csv-export-import
 ```
+
+## IConfigProperty Properties (For Export Only)
+| Property Name           | Description |
+| ----                    | ------- |
+| `header`                | Column header to be displayed on the header.  |
+| `property`              | Property to be used to read the value from the data object. If a value is provided, the same is used to get the data. If generateExportDataFn function is also given, the value will be passed as the first parameter to the function call. if generateExportDataFn is used, this property can be ignored. |
+| `isArray`               | Default: False. To identify if the data read is an array. If this is not specified and the data is an array, this will be automatically cxonsidered an array and the values are joined using a pipe symbol by default. |
+| `spread`                | Default: False. If this set the array properties will be spread to multiple columns. Look at the examples above. |
+| `order`                 | Column order. Anything repeated will be ordered within that order. |
+| `generateExportDataFn`  | A developer defined Function to read the data.  |
+
+## IExportConfiguration Properties (For Export Only)
+```
+const exportConfiguration: IExportConfiguration = {
+  "title": 'Is this the coolest CSV export package?]',
+  "includeHeader": true,
+  "columnSeparator": ',',
+  "arraySeparator": '|',
+  "sorroundValuesByString": '',
+  "removePipedArrayHeaderBrackets": false
+};
+```
+| Property Name                    | Description |
+| ----                             | ------- |
+| `title`                          | Default is null. This is a single row above the header. Set it to null, if not needed. Anything other than null will include a new top row with the provided text. |
+| `includeHeader`                  | Default: True. To include th eheader row or not.  |
+| `columnSeparator`                | Default: ',' (comma character). Character/string to use as columns separator. |
+| `arraySeparator`                 | Default: '|' (Pipe character). Character/string to use as array separator. |
+| `sorroundValuesByString`         | Default: ''. Any Character or String to prefix and suffix with columns values. |
+| `removePipedArrayHeaderBrackets` | Default: false. When isArray = true and spread = false, the header will by default be suffixed '[]' to identify the column as array for import purpose. Set it to false to remove it. |
 
 ## Usage
 we will assume the following data for the examples:
@@ -543,34 +577,3 @@ S.No,Id,First Name,Last Name,Role,Organisation,ScoreCount,Full Name,Organisation
 5004,4,Cruz,Ashley,3,1002,3,Cruz Ashley,Google,Staff-Eng,33,45,50,,
 5005,5,Rosemary,Hart,2,1003,0,Rosemary Hart,Pacom,Manager,,,,,
 ```
-## IConfigProperty Properties
-| Property Name           | Description |
-| ----                    | ------- |
-| `header`                | Column header to be displayed on the header.  |
-| `property`              | Property to be used to read the value from the data object. If a value is provided, the same is used to get the data. If generateExportDataFn function is also given, the value will be passed as the first parameter to the function call. if generateExportDataFn is used, this property can be ignored. |
-| `isArray`               | Default: False. To identify if the data read is an array. If this is not specified and the data is an array, this will be automatically cxonsidered an array and the values are joined using a pipe symbol by default. |
-| `spread`                | Default: False. If this set the array properties will be spread to multiple columns. Look at the examples above. |
-| `order`                 | Column order. Anything repeated will be ordered within that order. |
-| `generateExportDataFn`  | A developer defined Function to read the data.  |
-
-## IConfigProperty Properties
-```
-const exportConfiguration: IExportConfiguration = {
-  "title": 'Is this the coolest CSV export package?]',
-  "includeHeader": true,
-  "columnSeparator": ',',
-  "arraySeparator": '|',
-  "sorroundValuesByString": '',
-  "removePipedArrayHeaderBrackets": false
-};
-```
-| Property Name                    | Description |
-| ----                             | ------- |
-| `title`                          | Default is null. This is a single row above the header. Set it to null, if not needed. Anything other than null will include a new top row with the provided text. |
-| `includeHeader`                  | Default: True. To include th eheader row or not.  |
-| `columnSeparator`                | Default: ',' (comma character). Character/string to use as columns separator. |
-| `arraySeparator`                 | Default: '|' (Pipe character). Character/string to use as array separator. |
-| `sorroundValuesByString`         | Default: ''. Any Character or String to prefix and suffix with columns values. |
-| `removePipedArrayHeaderBrackets` | Default: false. When isArray = true and spread = false, the header will by default be suffixed '[]' to identify the column as array for import purpose. Set it to false to remove it. |
-
-
