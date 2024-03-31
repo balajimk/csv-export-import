@@ -553,4 +553,24 @@ S.No,Id,First Name,Last Name,Role,Organisation,ScoreCount,Full Name,Organisation
 | `order`                 | Column order. Anything repeated will be ordered within that order. |
 | `generateExportDataFn`  | A developer defined Function to read the data.  |
 
+## IConfigProperty Properties
+```
+const exportConfiguration: IExportConfiguration = {
+  "title": 'Is this the coolest CSV export package?]',
+  "includeHeader": true,
+  "columnSeparator": ',',
+  "arraySeparator": '|',
+  "sorroundValuesByString": '',
+  "removePipedArrayHeaderBrackets": false
+};
+```
+| Property Name                    | Description |
+| ----                             | ------- |
+| `title`                          | Default is null. This is a single row above the header. Set it to null, if not needed. Anything other than null will include a new top row with the provided text. |
+| `includeHeader`                  | Default: True. To include th eheader row or not.  |
+| `columnSeparator`                | Default: ',' (comma character). Character/string to use as columns separator. |
+| `arraySeparator`                 | Default: '|' (Pipe character). Character/string to use as array separator. |
+| `sorroundValuesByString`         | Default: ''. Any Character or String to prefix and suffix with columns values. |
+| `removePipedArrayHeaderBrackets` | Default: false. When isArray = true and spread = false, the header will by default be suffixed '[]' to identify the column as array for import purpose. Set it to false to remove it. |
+
 
