@@ -3,21 +3,37 @@
 ## Purpose
 csv-export-import can export Typescript/JavaScript data objects into CSV format and import CSV string back to data objects.
 
+## Installation
+```javascript
+npm install --save 'csv-export-import'
+```
+
+## exportToCSV(): Returns CSVContent as a string
 Exporting objects into CSV involves leveraging the extensive configuration possibilities to manipulate data and generate various outputs according to specific requirements. 
 ```
 const exportedCSV = exportToCSV(usersData, propertiesConfiguration)
 console.log(exportedCSV);
 ```
-Importing data from CSV string into data objects doesn't need any configuration at all; as long as the headers are available. Note that the headers row is mandatory at the moment.
+| Parameter Name           | Description |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| items                    | The Array data to be exporeted into a CSV content. |
+| configProeprties         | IConfigProperty[]. Properties configuration. This configuration defines what needs to be exported to csv. |
+| exportConfig             | IExportConfiguration. To configure the Export. |
+| dependentData            | Any supporting data needed for export. Ideally used by the developer to use them in the generateExportDataFn. |
+
+## importFromCSV(): Returns an object with { title: string, data: any }
+Importing data from CSV string into data objects doesn't need any configuration at all.
+The method by default assumes that Header line exists and Title line doesn't exist. They can be changed as the second and third parameter to the method.
 ```
-const importedData = importFromCSV(exportedCSV);
+const importedData = importFromCSV(exportedCSV, true, false);
 console.log(importedData);
 ```
+| Parameter Name   | Description |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
+| csv              | CSV content to import. |
+| hasHeader        | Default: true. Flag to set if CSV contains a Header line. |
+| hasTitle         | Default: false. Flag to set if CSV contains a Title line. |
 
-## Installation
-```javascript
-npm install --save csv-export-import
-```
 
 ## IConfigProperty Properties (For Export Only)
 | Property Name           | Description |
