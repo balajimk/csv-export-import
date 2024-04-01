@@ -32,5 +32,5 @@ export const importFromCSV = (csv: string, hasHeader: boolean = true, hasTitle: 
         });
         allData.push(newData);
     });
-    return (allData);
+    return { 'title': title, 'data': allData };
 }
