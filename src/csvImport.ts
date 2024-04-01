@@ -1,11 +1,14 @@
-export const importFromCSV = (csv: string): any => {
+export const importFromCSV = (csv: string, hasHeader: boolean = true, hasTitle: boolean = false): any => {
     const lines = csv.split('\n');
-    const headers = lines[0].split(',');
-    const dataLines = lines.slice(1);
-
+    const title = hasTitle ? lines[0] : null;
+    const headerIndex = hasHeader ? (hasTitle ? 1 : 0) : null;
+    var headers = headerIndex != null ? lines[headerIndex].split(',') : null;
+    const dataIndex = (hasTitle ? 1 : 0) + (hasHeader ? 1 : 0);
+    const dataLines = lines.slice(dataIndex);
     const allData = [];
     dataLines.forEach(line => {
         const lineColumns = line.split(',');
+        headers = headers ? headers : Array.apply(null, { length: lineColumns.length}).map((_, idx : number) => `col${idx + 1}`);
         const newData = {};
         headers.forEach((header, index) => {
             header = header.trim();
