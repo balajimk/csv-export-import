@@ -12,14 +12,14 @@ export const importFromCSV = (csv: string, hasHeader: boolean = true, hasTitle: 
         const newData = {};
         headers.forEach((header, index) => {
             header = header.trim();
-            if (header.trim().endsWith('[]')) {
+            if (hasHeader && header.trim().endsWith('[]')) {
                 // Piped Array Item.
                 const headerName = header.trim().slice(0, -2);
                 var values = [];
                 if (lineColumns[index] != "") values = lineColumns[index].split('|');
                 values = values.filter(v => v.length > 0);
                 newData[headerName] = values;
-            } else if (header.includes('[') && header.includes(']')) {
+            } else if (hasHeader && header.includes('[') && header.includes(']')) {
                 // Spread Array Item
                 const headerName = header.slice(0, header.indexOf('['));
                 const value = lineColumns[index];
