@@ -1,5 +1,6 @@
 export const importFromCSV = (csv: string, hasHeader: boolean = true, hasTitle: boolean = false, includeLineInfo: boolean = false): any => {
-    const lines = csv.split('\n');
+    // Removing \r added by excel when the csv file is saved.
+    const lines = csv.replaceAll('\r\n', '\n').split('\n');
     const title = hasTitle ? lines[0] : null;
     const headerIndex = hasHeader ? (hasTitle ? 1 : 0) : null;
     const headerLine = headerIndex != null ? lines[headerIndex] : null;
@@ -8,7 +9,10 @@ export const importFromCSV = (csv: string, hasHeader: boolean = true, hasTitle: 
     const dataLines = lines.slice(dataIndex);
     const allData = [];
     dataLines.forEach((line, lineIndex) => {
-        if (line == '') return;
+        // When csv file is saved in excel with empty rows, it adds an empty comma separated line.
+        // This replaceAll check will ignore those lines.
+        if (line == '' || line.replaceAll(',', '').trim() == '') return;
+        
         const lineColumns = line.split(',');
         headers = headers ? headers : Array.apply(null, { length: lineColumns.length}).map((_, idx : number) => `col${idx + 1}`);
         const newData = {};
