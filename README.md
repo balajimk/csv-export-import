@@ -11,7 +11,9 @@ npm install --save 'csv-export-import'
 ## simpleExportToCSV(): Returns CSVContent as a string
 A smart objects to CSV exporter - without any configuration.
 ```
-const simpleExportedCSV = exportToCSV(usersData)
+import { simpleExportToCSV } from "csv-export-import";
+
+const simpleExportedCSV = simpleExportToCSV(usersData);
 console.log(simpleExportedCSV);
 ```
 | Parameter Name           | Description |
@@ -24,7 +26,9 @@ console.log(simpleExportedCSV);
 ## exportToCSV(): Returns CSVContent as a string
 Exporting objects into CSV involves leveraging the extensive configuration possibilities to manipulate data and generate various outputs according to specific requirements. 
 ```
-const exportedCSV = exportToCSV(usersData, propertiesConfiguration)
+import { IConfigProperty, exportToCSV, } from "csv-export-import";
+
+const exportedCSV = exportToCSV(usersData, propertiesConfiguration);
 console.log(exportedCSV);
 ```
 | Parameter Name           | Description |
@@ -38,6 +42,8 @@ console.log(exportedCSV);
 Importing data from CSV string into data objects doesn't need any configuration at all.
 The method by default assumes that Header line exists and Title line doesn't exist. They can be changed as the second and third parameter to the method.
 ```
+import { importFromCSV } from "csv-export-import";
+
 const importedData = importFromCSV(exportedCSV, true, false);
 console.log(importedData);
 ```
