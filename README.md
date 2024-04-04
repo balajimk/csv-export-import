@@ -17,7 +17,7 @@ console.log(exportedCSV);
 | Parameter Name           | Description |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | items                    | The Array data to be exporeted into a CSV content. |
-| configProeprties         | IConfigProperty[]. Properties configuration. This configuration defines what needs to be exported to csv. |
+| configProperties         | IConfigProperty[]. Properties configuration. This configuration defines what needs to be exported to csv. |
 | exportConfig             | IExportConfiguration. To configure the Export. |
 | dependentData            | Any supporting data needed for export. Ideally used by the developer to use them in the generateExportDataFn. |
 
@@ -33,6 +33,7 @@ console.log(importedData);
 | csv              | CSV content to import. |
 | hasHeader        | Default: true. Flag to set if CSV contains a Header line. |
 | hasTitle         | Default: false. Flag to set if CSV contains a Title line. |
+| includeLineInfo  | Default: false. This will include 3 properties _line, _datalinenumber, _csvlinenumber in the generated data object. These properties will help to identify the data in csv file or to check the line without lookin at the file. |
 
 
 ## IConfigProperty Properties (For Export Only)
