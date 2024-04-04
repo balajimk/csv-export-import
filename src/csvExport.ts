@@ -1,7 +1,8 @@
 import { IConfigProperty, IExportConfiguration } from "./csvTypes";
 
-export const exportToCSV = (items: any, configProperties: IConfigProperty[], exportConfig?: IExportConfiguration, dependentData?: any): string => {
-    if (!exportConfig)
+export const exportToCSV = (items: any, configProperties: IConfigProperty[],
+    exportConfig?: IExportConfiguration, dependentData?: any): string => {
+    if (!exportConfig) {
         exportConfig = {
             "title": null,
             "includeHeader": true,
@@ -10,9 +11,12 @@ export const exportToCSV = (items: any, configProperties: IConfigProperty[], exp
             "sorroundValuesByString": '',
             "removePipedArrayHeaderBrackets": false
         }
+    }
+
     interface IConfigPropertyX extends IConfigProperty {
         xOrder: number;
     }
+    
     const xConfigProperties = configProperties.map(cp => cp as IConfigPropertyX);
     xConfigProperties.sort((a, b) => a.order - b.order);
     xConfigProperties.map((c, i) => c.xOrder = i);
@@ -21,7 +25,7 @@ export const exportToCSV = (items: any, configProperties: IConfigProperty[], exp
     if (!exportConfig.columnSeparator) exportConfig.columnSeparator = ',';
     if (!exportConfig.arraySeparator) exportConfig.arraySeparator = '|';
 
-    const resultItems = items.map((item, index) => {
+    const resultItems = items.map((item: any, index: number) => {
         const result = {};
         xConfigProperties.forEach(cp => {
         if (!item) return;
@@ -36,12 +40,12 @@ export const exportToCSV = (items: any, configProperties: IConfigProperty[], exp
         else if (cp.isArray && !cp.spread) // values && isArray
             result[`${cp.header}[]`] = values.join(exportConfig.arraySeparator);
         else // values, isArray && spread
-            values.forEach((v, index) => result[`${cp.header}[${index}]`] = v);
+            values.forEach((v: any, index: number) => result[`${cp.header}[${index}]`] = v);
         });
         return result;
     });
 
-    const headers = Array.from(new Set(resultItems.flatMap(r => Object.keys(r))));
+    const headers = Array.from(new Set(resultItems.flatMap((r: any) => Object.keys(r))));
     headers.sort((x, y) => {
         const a = x.toString();
         const b = y.toString();
@@ -71,7 +75,7 @@ export const exportToCSV = (items: any, configProperties: IConfigProperty[], exp
         return a.localeCompare(b);
     });
 
-    const resultCSVItems = resultItems.map((item, index) => {
+    const resultCSVItems = resultItems.map((item: any, index: number) => {
         const rowItem = [];
         headers.forEach((header) => {
         var value = item.hasOwnProperty(header as string) ? item[header as string] : '';
