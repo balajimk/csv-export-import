@@ -1,4 +1,4 @@
-# CSV Export Import | csv-export-import | Basic to Advanced
+# CSV Export Import | csv-export-import | Basic to Advanced Exports
 
 ## Purpose
 csv-export-import can export Typescript/JavaScript data objects into CSV format and import CSV string back to data objects.
@@ -7,6 +7,19 @@ csv-export-import can export Typescript/JavaScript data objects into CSV format 
 ```javascript
 npm install --save 'csv-export-import'
 ```
+
+## simpleExportToCSV(): Returns CSVContent as a string
+A smart objects to CSV exporter - without any configuration.
+```
+const simpleExportedCSV = exportToCSV(usersData)
+console.log(simpleExportedCSV);
+```
+| Parameter Name           | Description |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| items                    | The Array data to be exporeted into a CSV content. |
+| spreadArrays             | Default: true. When it's true, it will split simple arrays into multiple columns. |
+| columnSeparator          | Default: ','. The character/string to use as column separator. |
+| arraySeparator           | Default: '|'. The character/string to use as array separator when spreadArrays is false. |
 
 ## exportToCSV(): Returns CSVContent as a string
 Exporting objects into CSV involves leveraging the extensive configuration possibilities to manipulate data and generate various outputs according to specific requirements. 
@@ -34,7 +47,6 @@ console.log(importedData);
 | hasHeader        | Default: true. Flag to set if CSV contains a Header line. |
 | hasTitle         | Default: false. Flag to set if CSV contains a Title line. |
 | includeLineInfo  | Default: false. This will include 3 properties _line, _datalinenumber, _csvlinenumber in the generated data object. These properties will help to identify the data in csv file or to check the line without lookin at the file. |
-
 
 ## IConfigProperty Properties (For Export Only)
 | Property Name           | Description |
