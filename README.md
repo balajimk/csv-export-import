@@ -13,7 +13,7 @@ A smart objects to CSV exporter - without any configuration.
 ```
 import { simpleExportToCSV } from "csv-export-import";
 
-const simpleExportedCSV = exportToCSV(usersData)
+const simpleExportedCSV = simpleExportToCSV(usersData);
 console.log(simpleExportedCSV);
 ```
 | Parameter Name           | Description |
@@ -28,7 +28,7 @@ Exporting objects into CSV involves leveraging the extensive configuration possi
 ```
 import { IConfigProperty, exportToCSV, } from "csv-export-import";
 
-const exportedCSV = exportToCSV(usersData, propertiesConfiguration)
+const exportedCSV = exportToCSV(usersData, propertiesConfiguration);
 console.log(exportedCSV);
 ```
 | Parameter Name           | Description |
