@@ -21,7 +21,7 @@ console.log(simpleExportedCSV);
 | items                    | The Array data to be exporeted into a CSV content. |
 | spreadArrays             | Default: true. When it's true, it will split simple arrays into multiple columns. |
 | columnSeparator          | Default: ','. The character/string to use as column separator. |
-| arraySeparator           | Default: '|'. The character/string to use as array separator when spreadArrays is false. |
+| arraySeparator           | Default: '\|'. The character/string to use as array separator when spreadArrays is false. |
 
 ## exportToCSV(): Returns CSVContent as a string
 Exporting objects into CSV involves leveraging the extensive configuration possibilities to manipulate data and generate various outputs according to specific requirements. 
