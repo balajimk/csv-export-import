@@ -17,12 +17,16 @@ export const simpleExportToCSV = (items: any[], spreadArrays: boolean = true,
         for (const key in item) {
             if (item[key] != null && item[key] != undefined) {
                 if (Array.isArray(item[key])) {
-                    if (spreadArrays) {
-                        item[key].forEach((value: any, index: number) => {
-                            flatItem[`${key}[${index}]`] = value;
-                        });
+                    if (item[key].every(item => typeof item !== 'object')) {
+                        if (spreadArrays) {
+                            item[key].forEach((value: any, index: number) => {
+                                flatItem[`${key}[${index}]`] = value;
+                            });
+                        } else {
+                            flatItem[key] = item[key].join('|');
+                        }
                     } else {
-                        flatItem[key] = item[key].join('|');
+                        // Ignore array of non primitive datatype
                     }
                 } else {
                     flatItem[key] = item[key];
